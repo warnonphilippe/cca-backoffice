@@ -35,10 +35,11 @@ public class ProduceArticleTest {
         );
 
         articleList.stream().forEach(art -> {
-            articleChannel.output().send(MessageBuilder
+            boolean sended = articleChannel.output().send(MessageBuilder
                 .withPayload(art)
                 .setHeader(KafkaHeaders.MESSAGE_KEY, art.getId())
                 .build());
+            System.out.println(art.getId() + " " + sended);
         });
 
     }

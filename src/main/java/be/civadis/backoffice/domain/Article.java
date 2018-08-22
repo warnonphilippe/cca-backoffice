@@ -10,6 +10,7 @@ public class Article {
     }
 
     public Article(Long id, String code, String libelle) {
+        this.id = id;
         this.code = code;
         this.libelle = libelle;
     }
