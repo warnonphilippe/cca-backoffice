@@ -3,6 +3,7 @@ package be.civadis.backoffice;
 import be.civadis.backoffice.config.ApplicationProperties;
 import be.civadis.backoffice.config.DefaultProfileUtil;
 
+import be.civadis.backoffice.messaging.ArticleChannel;
 import io.github.jhipster.config.JHipsterConstants;
 
 import org.slf4j.Logger;
@@ -13,6 +14,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.liquibase.LiquibaseProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.core.env.Environment;
 
 import javax.annotation.PostConstruct;

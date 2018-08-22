@@ -7,21 +7,19 @@ import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api")
 public class ArticleProducerResource{
 
-    private MessageChannel channel;
+    private MessageChannel articleOutputChannel;
 
-    public ArticleProducerResource(ArticleOutputChannel channel) {
-        this.channel = channel.messageChannel();
+    public ArticleProducerResource(ArticleChannel channel) {
+        this.articleOutputChannel = channel.output();
     }
 
     @GetMapping("/articles/produces")
@@ -36,7 +34,7 @@ public class ArticleProducerResource{
         );
 
         articleList.stream().forEach(art -> {
-            channel.send(MessageBuilder
+            articleOutputChannel.send(MessageBuilder
                 .withPayload(art)
                 .setHeader(KafkaHeaders.MESSAGE_KEY, art.getId())
                 .build());
