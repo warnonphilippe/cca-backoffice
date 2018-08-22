@@ -32,8 +32,9 @@ spring:
                     brokers: localhost
                     zk-nodes: localhost
             bindings:
-                output:
-                    destination: topic-jhipster
+                articleOutputChannel:
+                    destination: article_jhipster
+                    content-type: application/json
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
         url: jdbc:h2:mem:backoffice;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
@@ -67,10 +68,10 @@ spring:
             enabled: false
     thymeleaf:
         mode: HTML
-        
+
 security:
     oauth2:
-    # client configuration needed : for condition in Spring Boot 
+    # client configuration needed : for condition in Spring Boot
         client:
             access-token-uri: http://DO_NOT_CALL:9080/auth/realms/jhipster/protocol/openid-connect/token
             user-authorization-uri: http://DO_NOT_CALL:9080/auth/realms/jhipster/protocol/openid-connect/auth
