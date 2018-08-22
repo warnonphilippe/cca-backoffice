@@ -35,7 +35,7 @@ public class ProduceArticleTest {
         );
 
         articleList.stream().forEach(art -> {
-            boolean sended = articleChannel.output().send(MessageBuilder
+            boolean sended = articleChannel.messageChannel().send(MessageBuilder
                 .withPayload(art)
                 .setHeader(KafkaHeaders.MESSAGE_KEY, art.getId())
                 .build());
@@ -43,5 +43,6 @@ public class ProduceArticleTest {
         });
 
     }
+
 
 }

@@ -7,8 +7,9 @@ public interface ArticleChannel {
 
     //nom du channel à utiliser dans la config pour le binding avec topic kafka
     String OUTPUT_CHANNEL = "articleOutputChannel";
+    //String OUTPUT_CHANNEL = "messageChannel";
 
-    @Output(ArticleChannel.OUTPUT_CHANNEL)
-    MessageChannel output();
+    @Output(value = ArticleChannel.OUTPUT_CHANNEL)
+    MessageChannel messageChannel();
 
 }

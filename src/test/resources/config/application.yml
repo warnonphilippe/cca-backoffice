@@ -32,6 +32,9 @@ spring:
                     brokers: localhost
                     zk-nodes: localhost
             bindings:
+                messageChannel:
+                    destination: topic-jhipster
+                    content-type: application/json
                 articleOutputChannel:
                     destination: article_jhipster
                     content-type: application/json

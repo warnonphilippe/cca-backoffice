@@ -3,6 +3,7 @@ package be.civadis.backoffice.messaging;
 import be.civadis.backoffice.domain.Article;
 import com.codahale.metrics.annotation.Timed;
 import org.mapstruct.ap.internal.util.Collections;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.support.MessageBuilder;
@@ -16,16 +17,12 @@ import java.util.List;
 @RequestMapping("/api")
 public class ArticleProducerResource{
 
-    private MessageChannel articleOutputChannel;
-
-    public ArticleProducerResource(ArticleChannel channel) {
-        this.articleOutputChannel = channel.output();
-    }
+    @Autowired
+    private ArticleChannel articleChannel;
 
     @GetMapping("/articles/produces")
     @Timed
     public void produce() {
-
 
         List<Article> articleList = Collections.newArrayList(
             new Article(1L, "111", "Article 111"),
@@ -34,7 +31,7 @@ public class ArticleProducerResource{
         );
 
         articleList.stream().forEach(art -> {
-            boolean sended = articleOutputChannel.send(MessageBuilder
+            boolean sended = articleChannel.messageChannel().send(MessageBuilder
                 .withPayload(art)
                 .setHeader(KafkaHeaders.MESSAGE_KEY, art.getId())
                 .build());
