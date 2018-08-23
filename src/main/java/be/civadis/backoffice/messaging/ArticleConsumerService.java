@@ -11,7 +11,10 @@ public class ArticleConsumerService {
 
     private final Logger log = LoggerFactory.getLogger(ArticleConsumerService.class);
 
-
+    /**
+     * ecoute sur le channel des articles, ce channel peut être associé à plusieurs topics (voir config)
+     * @param article
+     */
     @StreamListener(ArticleChannel.INPUT_CHANNEL)
     public void consume(Article article) {
         log.info("Received article: {}.", article.getCode());

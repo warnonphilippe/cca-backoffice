@@ -48,7 +48,7 @@ spring:
                     destination: article_jhipster
                     content-type: application/json
                 articleInputChannel:
-                    destination: article_jhipster
+                    destination: article_jhipster,article_jhipster2
                     content-type: application/json
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
