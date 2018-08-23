@@ -19,7 +19,7 @@ import org.springframework.messaging.support.GenericMessage;
  * See http://docs.spring.io/spring-cloud-stream/docs/current/reference/htmlsingle/
  * for the official Spring Cloud Stream documentation.
  */
-@EnableBinding(value = { Source.class, ArticleChannel.class })
+@EnableBinding(value = { Source.class, ArticleChannel.class})
 public class MessagingConfiguration {
 
     /**

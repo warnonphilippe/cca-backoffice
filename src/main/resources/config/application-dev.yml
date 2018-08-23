@@ -47,7 +47,9 @@ spring:
                 articleOutputChannel:
                     destination: article_jhipster
                     content-type: application/json
-
+                articleInputChannel:
+                    destination: article_jhipster
+                    content-type: application/json
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
         url: jdbc:h2:mem:backoffice;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
