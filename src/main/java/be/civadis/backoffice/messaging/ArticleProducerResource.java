@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,9 +32,9 @@ public class ArticleProducerResource{
         articleList.add(new Article(3L, "333", "Article 333"));
 
         articleList.stream().forEach(art -> {
-            boolean sended = articleChannel.messageChannel().send(MessageBuilder
+            articleChannel.messageChannel().send(MessageBuilder
                 .withPayload(art)
-                //.setHeader(KafkaHeaders.MESSAGE_KEY, art.getId())
+                .setHeader(KafkaHeaders.MESSAGE_KEY, art.getId().toString().getBytes(StandardCharsets.UTF_8))
                 .build());
         });
 
