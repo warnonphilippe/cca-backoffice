@@ -32,11 +32,11 @@ spring:
                     brokers: localhost
                     zk-nodes: localhost
             bindings:
-                messageChannel:
-                    destination: topic-jhipster
-                    content-type: application/json
                 articleOutputChannel:
                     destination: article_jhipster
+                    content-type: application/json
+                articleInputChannel:
+                    destination: article_jhipster,article_jhipster2
                     content-type: application/json
     datasource:
         type: com.zaxxer.hikari.HikariDataSource

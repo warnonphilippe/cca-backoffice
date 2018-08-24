@@ -15,6 +15,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
@@ -28,19 +30,19 @@ public class ProduceArticleTest {
     @Test
     public void produce() {
 
-        List<Article> articleList = Collections.newArrayList(
+        List<Article> articleList = Arrays.asList(
             new Article(1L, "111", "Article 111"),
             new Article(2L, "222", "Article 222"),
             new Article(3L, "333", "Article 333")
+        ) ;
+
+        articleList.stream().forEach(art ->
+            articleChannel.messageChannel().send(MessageBuilder
+                .withPayload(art)
+                .setHeader(KafkaHeaders.MESSAGE_KEY, art.getId().toString().getBytes(StandardCharsets.UTF_8))
+                .build())
         );
 
-        articleList.stream().forEach(art -> {
-            boolean sended = articleChannel.messageChannel().send(MessageBuilder
-                .withPayload(art)
-                .setHeader(KafkaHeaders.MESSAGE_KEY, art.getId())
-                .build());
-            System.out.println(art.getId() + " " + sended);
-        });
 
     }
 
