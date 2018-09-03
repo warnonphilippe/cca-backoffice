@@ -51,7 +51,7 @@ public class ArticleProducerResource{
      * @param tenant courant
      * @param article
      */
-    @PostMapping("/articles/produces/{tenant}")
+    @PostMapping("/articles/{tenant}")
     @Timed
     public void produce(@PathVariable(value = "tenant") String tenant, @RequestBody Article article) {
 
