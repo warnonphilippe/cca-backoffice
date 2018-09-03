@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.binding.BinderAwareChannelResolver;
 import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.support.MessageBuilder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
@@ -49,27 +46,21 @@ public class ArticleProducerResource{
     }
 
     /**
-     * génère des articles sur un topic défini au runtime
+     * génère l'article sur un topic défini au runtime selon le tenant courant
      * utile dans un contexte multitenant lorsque l'on ne connait le tenant qu'au runtime
-     * @param tenant
+     * @param tenant courant
+     * @param article
      */
-    @GetMapping("/articles/produces/{tenant}")
+    @PostMapping("/articles/produces/{tenant}")
     @Timed
-    public void produce(@PathVariable(value = "tenant") String tenant) {
+    public void produce(@PathVariable(value = "tenant") String tenant, @RequestBody Article article) {
 
-        List<Article> articleList = Arrays.asList(
-            new Article(1L, "111", "Article 111"),
-            new Article(2L, "222", "Article 222"),
-            new Article(3L, "333", "Article 333")
-        ) ;
-
-        articleList.stream().forEach(art ->
-                resolver.resolveDestination("article_" + tenant.trim()).send(MessageBuilder
-                .withPayload(art)
-                .setHeader(KafkaHeaders.MESSAGE_KEY, art.getId().toString().getBytes(StandardCharsets.UTF_8))
-                .build())
-        );
+        resolver.resolveDestination("article_" + tenant.trim()).send(MessageBuilder
+            .withPayload(article)
+            .setHeader(KafkaHeaders.MESSAGE_KEY, article.getId().toString().getBytes(StandardCharsets.UTF_8))
+            .build());
 
     }
+
 
 }
