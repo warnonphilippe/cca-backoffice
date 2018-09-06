@@ -37,6 +37,8 @@ spring:
             enabled: false # we use Webpack dev server + BrowserSync for livereload
     jackson:
         serialization.indent_output: true
+    kafka:
+        admin.properties.cleanup.policy: compact #a tester, voir si possible de le mettre sous cloud.stream.kafka...
     cloud:
         stream:
             kafka:
